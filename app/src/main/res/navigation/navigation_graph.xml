@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_graph"
+    app:startDestination="@id/mainFragment">
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.samplecode.themovieapp.fragments.MainFragment"
+        android:label="The App"
+        tools:layout="@layout/fragment_main">
+        <action
+            android:id="@+id/action_mainFragment_to_movieDetailsFragment2"
+            app:destination="@id/movieDetailsFragment2"
+            app:popUpTo="@id/mainFragment"
+            app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/action_mainFragment_to_showDetailsFragment2"
+            app:destination="@id/showDetailsFragment2"
+            app:popUpTo="@id/mainFragment"
+            app:popUpToInclusive="false" />
+    </fragment>
+    <fragment
+        android:id="@+id/movieDetailsFragment2"
+        android:name="com.samplecode.themovieapp.fragments.MovieDetailsFragment"
+        android:label="Movie Details"
+        tools:layout="@layout/fragment_movie_details">
+        <argument
+            android:name="imagePosterPath"
+            app:argType="string" />
+        <argument
+            android:name="movieTitle"
+            app:argType="string" />
+        <argument
+            android:name="movieDescription"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/showDetailsFragment2"
+        android:name="com.samplecode.themovieapp.fragments.ShowDetailsFragment"
+        android:label="TV Show Details"
+        tools:layout="@layout/fragment_show_details">
+        <argument
+            android:name="imagePosterPath"
+            app:argType="string" />
+        <argument
+            android:name="showTitle"
+            app:argType="string" />
+        <argument
+            android:name="showDescription"
+            app:argType="string" />
+    </fragment>
+</navigation>
