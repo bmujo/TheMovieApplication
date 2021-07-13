@@ -10,6 +10,10 @@ import javax.inject.Inject
 open class BaseViewModel @Inject constructor(private val repository: AppRepository, state: SavedStateHandle) : ViewModel() {
     private val currentQuery = state.getLiveData(CURRENT_QUERY, DEFAULT_QUERY)
 
+    val _queryStateMutableData = MutableLiveData<String>()
+    val queryStateLiveData: LiveData<String>
+        get() = _queryStateMutableData
+
     val listOfMovies = currentQuery.switchMap { queryString ->
         repository.getSearchResults(queryString).cachedIn(viewModelScope)
     }
@@ -26,4 +30,6 @@ open class BaseViewModel @Inject constructor(private val repository: AppReposito
         private const val CURRENT_QUERY = "current_query"
         private const val DEFAULT_QUERY = ""
     }
+
+
 }

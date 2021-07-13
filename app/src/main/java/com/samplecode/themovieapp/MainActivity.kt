@@ -2,6 +2,7 @@ package com.samplecode.themovieapp
 
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -37,7 +38,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         super.onCreateOptionsMenu(menu)
         menuInflater.inflate(R.menu.menu_search, menu)
@@ -50,6 +50,7 @@ class MainActivity : AppCompatActivity() {
 
         val coroutineScope = lifecycle.coroutineScope
         var searchJob: Job? = null
+        searchView?.setQuery(viewModel.queryStateLiveData.value, false)
 
         searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
@@ -66,13 +67,20 @@ class MainActivity : AppCompatActivity() {
                     searchJob?.cancel()
                     searchJob = coroutineScope.launch {
                         newText?.let {
-                            delay(500)
-                            viewModel.search(newText)
+                            delay(1000)
+                            if(newText.length >= 3){
+                                viewModel.search(newText)
+                            }
+                            else {
+                                viewModel.search("")
+                            }
                         }
                     }
                 } catch (e: Exception) {
-                    val temp = e.message
+
                 }
+
+                viewModel._queryStateMutableData.value = newText
 
                 return true
             }
@@ -96,3 +104,4 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 }
+
